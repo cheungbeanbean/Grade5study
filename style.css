@@ -1,9 +1,211 @@
-.dark-mode {
-    background-color: #333333;
-    color: #FFFFFF;
+/* Light mode (default) */
+:root[data-theme="light"] {
+    --bg-primary: #f0f4f8;
+    --bg-secondary: #ffffff;
+    --text-primary: #2c3e50;
+    --text-secondary: #555555;
+    --border-color: #eee;
+    --button-bg: #3498db;
+    --button-hover: #2980b9;
+    --correct-color: #27ae60;
+    --wrong-color: #e74c3c;
+    --explanation-bg: #f9f9f9;
+    --explanation-border: #3498db;
+    --result-success-bg: #e8f6f3;
+    --result-fail-bg: #fdedec;
+    --toggle-bg: #3498db;
 }
 
-.light-mode {
-    background-color: #FFFFFF;
-    color: #333333;
+/* Dark mode */
+:root[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --border-color: #404040;
+    --button-bg: #2980b9;
+    --button-hover: #3498db;
+    --correct-color: #4caf50;
+    --wrong-color: #ff6b6b;
+    --explanation-bg: #333333;
+    --explanation-border: #4a90e2;
+    --result-success-bg: #1b4d3e;
+    --result-fail-bg: #4d1f1f;
+    --toggle-bg: #2980b9;
+}
+
+* {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    font-family: "Microsoft JhengHei", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 20px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+theme-toggle button {
+    padding: 10px 15px;
+    background-color: var(--toggle-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+theme-toggle button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-top: 40px;
+}
+
+h2 {
+    color: var(--text-primary);
+}
+
+h3 {
+    color: var(--text-primary);
+}
+
+.question {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+.question p {
+    color: var(--text-secondary);
+}
+
+.question strong {
+    color: var(--text-primary);
+}
+
+.options {
+    list-style: none;
+    padding: 0;
+}
+
+.options li {
+    margin: 10px 0;
+    color: var(--text-secondary);
+}
+
+.options input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#result {
+    margin-top: 30px;
+    display: none;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: var(--result-success-bg);
+    color: var(--text-primary);
+}
+
+.correct {
+    color: var(--correct-color);
+    font-weight: bold;
+}
+
+.wrong {
+    color: var(--wrong-color);
+    font-weight: bold;
+}
+
+.explanation {
+    background: var(--explanation-bg);
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 0.9em;
+    border-left: 4px solid var(--explanation-border);
+    color: var(--text-secondary);
+}
+
+/* Scrollbar styling for dark mode */
+:root[data-theme="dark"] ::-webkit-scrollbar {
+    width: 10px;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #555555;
+    border-radius: 5px;
+}
+
+:root[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #777777;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+    }
+
+    .theme-toggle button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    h1 {
+        margin-top: 30px;
+        font-size: 1.5em;
+    }
 }
