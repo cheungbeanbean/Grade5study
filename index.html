@@ -3,30 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>五年級自然測驗：探索星空的奧祕</title>
+    <title>五年級測驗中心</title>
     <style>
-        /* 定義顏色變數 */
         :root {
             --bg-color: #f0f4f8;
             --container-bg: #ffffff;
             --text-color: #2c3e50;
-            --question-border: #eeeeee;
             --btn-bg: #3498db;
-            --result-bg: #e8f6f3;
-            --wrong-color: #e74c3c;
-            --correct-color: #27ae60;
+            --science-color: #e74c3c;
+            --english-color: #f39c12;
+            --math-color: #27ae60;
         }
 
-        /* 暗色模式變數 */
         [data-theme='dark'] {
-            --bg-color: #1a1a2e; /* 深星空色 */
+            --bg-color: #1a1a2e;
             --container-bg: #16213e;
             --text-color: #e0e0e0;
-            --question-border: #0f3460;
             --btn-bg: #0077b6;
-            --result-bg: #1b262c;
-            --wrong-color: #ff4d4d;
-            --correct-color: #4ade80;
+            --science-color: #ff4d4d;
+            --english-color: #ffb84d;
+            --math-color: #4ade80;
         }
 
         body { 
@@ -38,11 +34,22 @@
             transition: all 0.3s ease;
         }
 
-        .theme-toggle { text-align: right; margin-bottom: 20px; }
-        #themeBtn { padding: 8px 15px; cursor: pointer; border-radius: 20px; border: 1px solid var(--btn-bg); background: transparent; color: var(--text-color); }
+        .theme-toggle { 
+            text-align: right; 
+            margin-bottom: 20px; 
+        }
+
+        #themeBtn { 
+            padding: 8px 15px; 
+            cursor: pointer; 
+            border-radius: 20px; 
+            border: 1px solid var(--btn-bg); 
+            background: transparent; 
+            color: var(--text-color); 
+        }
 
         .container { 
-            max-width: 800px; 
+            max-width: 900px; 
             margin: auto; 
             background: var(--container-bg); 
             padding: 30px; 
@@ -50,26 +57,56 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
         }
 
-        h1 { text-align: center; color: var(--text-color); }
-        .question { margin-bottom: 25px; border-bottom: 1px solid var(--question-border); padding-bottom: 15px; }
-        .options { list-style: none; padding: 0; }
-        .options li { margin: 10px 0; }
-        
-        button#submitBtn { 
-            display: block; width: 100%; padding: 15px; 
-            background-color: var(--btn-bg); color: white; 
-            border: none; border-radius: 5px; font-size: 18px; cursor: pointer; 
-        }
-        button#submitBtn:hover { filter: brightness(1.1); }
-
-        #result { 
-            margin-top: 30px; display: none; padding: 20px; 
-            border-radius: 10px; border: 2px solid var(--btn-bg);
-            background-color: var(--result-bg); 
+        h1 { 
+            text-align: center; 
+            color: var(--text-color); 
+            margin-bottom: 40px;
         }
 
-        .correct { color: var(--correct-color); font-weight: bold; }
-        .wrong { color: var(--wrong-color); font-weight: bold; }
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .subject-card {
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .science-card {
+            background: linear-gradient(135deg, var(--science-color), #c0392b);
+        }
+
+        .english-card {
+            background: linear-gradient(135deg, var(--english-color), #d68910);
+        }
+
+        .math-card {
+            background: linear-gradient(135deg, var(--math-color), #1e8449);
+        }
+
+        .subject-card h2 {
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .subject-card p {
+            margin: 10px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -79,21 +116,30 @@
 </div>
 
 <div class="container">
-    <h1>🌠 五年級自然測驗：探索星空的奧祕</h1>
-    <form id="quizForm">
-        <div id="questionsContainer"></div>
-        <button id="submitBtn" type="button" onclick="calculateScore()">提交答案查看結果</button>
-    </form>
-
-    <div id="result">
-        <h2>測試結果</h2>
-        <p id="scoreText" style="font-size: 1.5em;"></p>
-        <div id="wrongAnswers"></div>
+    <h1>📚 五年級測驗中心</h1>
+    
+    <div class="subjects-grid">
+        <a href="science.html" class="subject-card science-card">
+            <h2>🌠</h2>
+            <h2>自然</h2>
+            <p>探索科學世界</p>
+        </a>
+        
+        <a href="english.html" class="subject-card english-card">
+            <h2>🌍</h2>
+            <h2>英文</h2>
+            <p>學習英語知識</p>
+        </a>
+        
+        <a href="math.html" class="subject-card math-card">
+            <h2>🔢</h2>
+            <h2>數學</h2>
+            <p>挑戰數學問題</p>
+        </a>
     </div>
 </div>
 
 <script>
-    // 主題切換邏輯
     function toggleTheme() {
         const html = document.documentElement;
         const btn = document.getElementById('themeBtn');
@@ -105,78 +151,12 @@
         localStorage.setItem('theme', newTheme);
     }
 
-    // 載入儲存的主題
     window.addEventListener('DOMContentLoaded', function() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         const btn = document.getElementById('themeBtn');
         if (savedTheme === 'dark') btn.textContent = '☀️ 亮色模式';
     });
-
-    const quizData = [
-        { q: "在晴朗的夜晚，我們看到的星星大多是什麼星？", a: ["行星", "恆星", "衛星", "流星"], correct: 1 },
-        { q: "星星的顏色不同，主要是因為什麼原因？", a: ["距離遠近", "大小不同", "表面溫度不同", "亮暗程度"], correct: 2 },
-        { q: "古代人將相鄰的星星想像成各種圖形，稱稱為？", a: ["星雲", "星系", "星座", "星團"], correct: 2 },
-        { q: "使用星座盤觀測時，應該將星座盤如何放置？", a: ["平放在桌上", "垂直掛在牆上", "高舉過頭頂，盤面朝下", "貼在胸前"], correct: 2 },
-        { q: "使用星座盤時，要先對準哪兩個資訊？", a: ["農曆日期與時間", "國曆日期與時間", "氣溫與濕度", "經度與緯度"], correct: 1 },
-        { q: "在台灣，哪一顆星的位置幾乎固定不動，可用來辨認方位？", a: ["織女星", "天狼星", "北極星", "牛郎星"], correct: 2 },
-        { q: "春天夜晚常見的大三角是由哪三顆星組成？", a: ["大角星、角宿一、五帝座一", "織女星、牛郎星、天津四", "參宿四、天狼星、南河三", "北極星、北斗七星、開陽星"], correct: 0 },
-        { q: "北斗七星在天空中的形狀像什麼？", a: ["獵人", "長柄杓子", "英文字母 W", "獅子尾巴"], correct: 1 },
-        { q: "利用北斗七星尋找北極星，要將勺口前兩顆星連線延長幾倍？", a: ["3倍", "4倍", "5倍", "6倍"], correct: 2 },
-        { q: "仙后座的形狀像什麼英文字母？", a: ["S", "M 或 W", "L", "O"], correct: 1 },
-        { q: "獵戶座是哪一個季節最具代表性的星座？", a: ["春天", "夏天", "秋天", "冬天"], correct: 3 },
-        { q: "星星在天空中的方位通常是由哪裡轉向哪裡？", a: ["西向東", "東向西", "南向北", "北向南"], correct: 1 },
-        { q: "造成星星東升西落現象的主要原因是？", a: ["地球公轉", "地球自轉", "星星在動", "月球繞地球"], correct: 1 },
-        { q: "在同一個晚上，隨著時間變化，北極星的位置會如何？", a: ["由東向西移", "由西向東移", "幾乎不動", "繞著月亮轉"], correct: 2 },
-        { q: "不同季節看到的主要星座不同，主要是因為？", a: ["地球自轉", "地球公轉", "星星跑掉了", "月球遮擋"], correct: 1 },
-        { q: "天空中星星的亮度等級稱為「星等」，請問幾等星最亮？", a: ["-1等星", "1等星", "3等星", "6等星"], correct: 0 },
-        { q: "觀測星星時，應選擇什麼樣的地點？", a: ["市中心大樓屋頂", "燈光昏暗、視野開闊處", "森林茂密處", "百貨公司門口"], correct: 1 },
-        { q: "星座盤上的透明橢圓形視窗代表什麼？", a: ["全天空的所有星星", "當時當地能看到的星空範圍", "銀河系", "太陽系"], correct: 1 },
-        { q: "下列哪一個星座位於夏季大三角中？", a: ["天鵝座", "獵戶座", "仙后座", "金牛座"], correct: 0 },
-        { q: "若在台北觀測北極星，仰角大約是多少度？", a: ["15度", "25度", "45度", "90度"], correct: 1 }
-    ];
-
-    const container = document.getElementById('questionsContainer');
-    quizData.forEach((data, index) => {
-        let html = `<div class="question">
-            <p><strong>${index + 1}. ${data.q}</strong></p>
-            <ul class="options">`;
-        data.a.forEach((opt, i) => {
-            html += `<li><label><input type="radio" name="q${index}" value="${i}"> ${opt}</label></li>`;
-        });
-        html += `</ul></div>`;
-        container.innerHTML += html;
-    });
-
-    function calculateScore() {
-        let score = 0;
-        let wrongHtml = "<h3>錯題複習：</h3>";
-        let hasWrong = false;
-
-        quizData.forEach((data, index) => {
-            const selected = document.querySelector(`input[name="q${index}"]:checked`);
-            const isCorrect = selected && parseInt(selected.value) === data.correct;
-            
-            if (isCorrect) {
-                score++;
-            } else {
-                hasWrong = true;
-                const userChoice = selected ? data.a[selected.value] : "未作答";
-                wrongHtml += `<div class="question" style="border-left: 5px solid var(--wrong-color); padding-left: 10px;">
-                    <p><strong>${index + 1}. ${data.q}</strong></p>
-                    <p class="wrong">你的答案：${userChoice}</p>
-                    <p class="correct">正確答案：${data.a[data.correct]}</p>
-                </div>`;
-            }
-        });
-
-        const resultDiv = document.getElementById('result');
-        document.getElementById('scoreText').innerHTML = `得分：<strong>${score}</strong> / ${quizData.length}`;
-        document.getElementById('wrongAnswers').innerHTML = hasWrong ? wrongHtml : "<p class='correct'>完美！你對星座瞭如指掌！</p>";
-        
-        resultDiv.style.display = 'block';
-        window.scrollTo({ top: resultDiv.offsetTop, behavior: 'smooth' });
-    }
 </script>
 
 </body>
