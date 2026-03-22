@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>單元一 測驗 2：進階星空觀測</title>
+    <style>
+        :root { --bg-color: #f0f4f8; --container-bg: #ffffff; --text-color: #2c3e50; --question-border: #eeeeee; --btn-bg: #e67e22; --result-bg: #fef5e7; --wrong-color: #e74c3c; --correct-color: #27ae60; }
+        [data-theme='dark'] { --bg-color: #1a1a2e; --container-bg: #16213e; --text-color: #e0e0e0; --question-border: #0f3460; --btn-bg: #d35400; --result-bg: #2c3e50; --wrong-color: #ff4d4d; --correct-color: #4ade80; }
+        body { font-family: "Microsoft JhengHei", sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; line-height: 1.6; transition: all 0.3s ease; }
+        .theme-toggle { text-align: right; margin-bottom: 20px; }
+        #themeBtn { padding: 8px 15px; cursor: pointer; border-radius: 20px; border: 1px solid var(--btn-bg); background: transparent; color: var(--text-color); }
+        .container { max-width: 800px; margin: auto; background: var(--container-bg); padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        h1 { text-align: center; border-bottom: 3px solid var(--btn-bg); padding-bottom: 10px; }
+        .question { margin-bottom: 25px; border-bottom: 1px solid var(--question-border); padding-bottom: 15px; }
+        .options { list-style: none; padding: 0; }
+        button#submitBtn { display: block; width: 100%; padding: 15px; background-color: var(--btn-bg); color: white; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; font-weight: bold; }
+        #result { margin-top: 30px; display: none; padding: 20px; border-radius: 10px; border: 2px solid var(--btn-bg); background-color: var(--result-bg); }
+        .history-section { margin-top: 50px; padding-top: 20px; border-top: 2px dashed var(--question-border); }
+        .history-item { background: var(--bg-color); padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--btn-bg); }
+        .correct { color: var(--correct-color); font-weight: bold; }
+        .wrong { color: var(--wrong-color); font-weight: bold; }
+        details summary { cursor: pointer; color: var(--btn-bg); font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()">🌙 暗色模式</button>
+</div>
+
+<div class="container">
+    <p><a href="science.html" style="text-decoration: none;">⬅ 返回目錄</a></p>
+    <h1>🌠 單元一 測驗 2：進階星空觀測</h1>
+    <form id="quizForm">
+        <div id="questionsContainer"></div>
+        <button id="submitBtn" type="button" onclick="calculateScore()">提交答案並紀錄結果</button>
+    </form>
+
+    <div id="result">
+        <h2>測試結果</h2>
+        <p id="scoreText" style="font-size: 1.5em;"></p>
+        <div id="wrongAnswers"></div>
+    </div>
+
+    <div class="history-section">
+        <h3>📊 測驗紀錄回顧 (教師專用)</h3>
+        <div id="historyList">尚無測驗紀錄</div>
+        <button onclick="clearHistory()" style="margin-top: 20px; background: var(--wrong-color); color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px;">清除 Quiz 2 紀錄</button>
+    </div>
+</div>
+
+<script>
+    // Unique storage key for Quiz 2
+    const STORAGE_KEY = 'science_unit1_quiz2_results';
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        btn.textContent = newTheme === 'dark' ? '☀️ 亮色模式' : '🌙 暗色模式';
+        localStorage.setItem('theme', newTheme);
+    }
+
+    const quizData = [
+        { q: "若觀察到一顆發出「藍白色」光芒的恆星，這代表它的表面溫度如何？", a: ["極高", "中等", "較低", "與顏色無關"], correct: 0 },
+        { q: "在不同緯度觀察北極星，仰角會有所不同。若在北極點觀察，北極星的仰角約為幾度？", a: ["0度", "23.5度", "45度", "90度"], correct: 3 },
+        { q: "秋季夜晚，北斗七星位置較低不易觀察時，通常利用哪個星座來尋找北極星？", a: ["獵戶座", "仙后座", "天蠍座", "大犬座"], correct: 1 },
+        { q: "利用仙后座尋找北極星時，要將 W 型兩側延伸的交點與 W 中間的星連線，並延長約幾倍距離？", a: ["3倍", "5倍", "7倍", "9倍"], correct: 1 },
+        { q: "關於恆星與行星的敘述，下列何者正確？", a: ["行星會自行發光", "恆星在星空中的相對位置幾乎不變", "金星是恆星", "恆星圍繞地球旋轉"], correct: 1 },
+        { q: "在台灣觀察星空，星星每小時大約向西移動幾度？", a: ["5度", "15度", "30度", "45度"], correct: 1 },
+        { q: "如果晚上 8 點看到織女星在頭頂正上方，晚上 10 點時它會移動到哪個方位？", a: ["偏東", "偏西", "偏南", "原地不動"], correct: 1 },
+        { q: "造成星空中星星「東升西落」現象的根本原因是什麼？", a: ["地球自西向東自轉", "地球自東向西自轉", "星星繞著太陽轉", "星星自行移動"], correct: 0 },
+        { q: "夏季大三角是由哪三顆亮星組成的？", a: ["織女星、牛郎星、天津四", "參宿四、天狼星、南河三", "大角星、角宿一、五帝座一", "北極星、北斗七星、開陽星"], correct: 0 },
+        { q: "使用星座盤時，如果觀測者面向「南方」，應該如何拿星座盤？", a: ["將盤面「南」字朝下", "將盤面「北」字朝下", "平放在地上", "隨便拿都可以"], correct: 0 },
+        { q: "我們在地球上看到太陽比其他恆星亮很多，主要原因是？", a: ["太陽體積最大", "太陽溫度最高", "太陽距離地球最近", "太陽是唯一會發光的星"], correct: 2 },
+        { q: "星等越「小」的星星，代表它的亮度如何？", a: ["越暗", "越亮", "距離越遠", "溫度越低"], correct: 1 },
+        { q: "冬季星空中，最容易辨認、形狀像個獵人且有三顆斜排亮星的星座是？", a: ["獅子座", "獵戶座", "天鵝座", "飛馬座"], correct: 1 },
+        { q: "若在台北（北緯25度）觀測北極星，其仰角大約是多少？", a: ["25度", "65度", "90度", "隨著時間改變"], correct: 0 },
+        { q: "在星空中，哪一種天體的位置相對於其他天體會有明顯的「位移」？", a: ["恆星", "星座", "行星（如木星）", "星雲"], correct: 2 },
+        { q: "觀察北斗七星時，勺口前兩顆星（天樞、天璇）的連線是指向哪裡？", a: ["南方", "北極星", "織女星", "太陽"], correct: 1 },
+        { q: "「銀河」在星空中看起來像一條淡淡的雲帶，它實際上是由什麼組成的？", a: ["雲霧", "水蒸氣", "無數的恆星", "行星"], correct: 2 },
+        { q: "一年中，我們在不同季節看到的代表性星座不同，是因為？", a: ["地球自轉", "地球公轉", "星星會冬眠", "月球繞地球轉"], correct: 1 },
+        { q: "下列哪一顆星不屬於「夏季大三角」？", a: ["織女星", "天津四", "牛郎星", "北極星"], correct: 3 },
+        { q: "若要在戶外觀測星空，為了不影響眼睛對暗光的適應，手電筒應該如何處理？", a: ["加裝紅色玻璃紙", "更換成最強的白光", "加裝藍色玻璃紙", "直接照向天空"], correct: 0 }
+    ];
+
+    const container = document.getElementById('questionsContainer');
+    quizData.forEach((data, index) => {
+        let html = `<div class="question"><p><strong>${index + 1}. ${data.q}</strong></p><ul class="options">`;
+        data.a.forEach((opt, i) => {
+            html += `<li><label><input type="radio" name="q${index}" value="${i}"> ${opt}</label></li>`;
+        });
+        html += `</ul></div>`;
+        container.innerHTML += html;
+    });
+
+    function displayHistory() {
+        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        const listContainer = document.getElementById('historyList');
+        if (history.length === 0) { listContainer.innerHTML = "目前沒有 Quiz 2 的測驗紀錄。"; return; }
+        listContainer.innerHTML = history.slice().reverse().map((item, idx) => `
+            <div class="history-item">
+                <strong>第 ${history.length - idx} 次測驗 - ${item.date}</strong><br>
+                得分：<span class="correct">${item.score} / ${item.total}</span>
+                <details><summary>點擊展開錯題細節</summary>
+                    <div style="margin-top: 10px;">
+                        ${item.mistakes.length > 0 ? item.mistakes.map(m => `
+                            <p style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px;">
+                                <strong>問：</strong>${m.question}<br>
+                                <span class="wrong">學生選：${m.userAnswer}</span> | <span class="correct">正確：${m.correctAnswer}</span>
+                            </p>`).join('') : "恭喜！此份測驗全對。"}
+                    </div>
+                </details>
+            </div>`).join('');
+    }
+
+    function calculateScore() {
+        let score = 0;
+        let mistakes = [];
+        quizData.forEach((data, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selected && parseInt(selected.value) === data.correct) {
+                score++;
+            } else {
+                mistakes.push({
+                    question: data.q,
+                    userAnswer: selected ? data.a[selected.value] : "未作答",
+                    correctAnswer: data.a[data.correct]
+                });
+            }
+        });
+
+        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        history.push({ 
+            date: new Date().toLocaleString(), 
+            score: score, 
+            total: quizData.length, 
+            mistakes: mistakes 
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('scoreText').innerHTML = `本次測驗得分：<strong>${score}</strong> / ${quizData.length}`;
+        displayHistory();
+        window.scrollTo({ top: document.getElementById('result').offsetTop, behavior: 'smooth' });
+    }
+
+    function clearHistory() { if(confirm("確定要刪除所有 Quiz 2 的測驗紀錄嗎？")) { localStorage.removeItem(STORAGE_KEY); displayHistory(); } }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        displayHistory();
+    });
+</script>
+</body>
+</html>
