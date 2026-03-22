@@ -1,0 +1,30 @@
+// Change the storage key to be unique to Quiz 1
+const STORAGE_KEY = 'science_unit1_quiz1_results';
+
+function displayHistory() {
+    // Use the new specific key
+    const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const listContainer = document.getElementById('historyList');
+    
+    if (history.length === 0) {
+        listContainer.innerHTML = "尚無測驗紀錄";
+        return;
+    }
+    // ... rest of your display logic ...
+}
+
+function calculateScore() {
+    // ... your scoring logic ...
+
+    // Save using the specific Quiz 1 key
+    const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    history.push({
+        date: new Date().toLocaleString(),
+        score: score,
+        total: quizData.length,
+        mistakes: currentMistakes
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    
+    displayHistory();
+}
