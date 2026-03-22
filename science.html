@@ -4,20 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自然科學測驗索引</title>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --container-bg: #ffffff;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --unit-border: #dcdde1;
+        }
+
+        [data-theme='dark'] {
+            --bg-color: #1a1a2e;
+            --container-bg: #16213e;
+            --text-color: #e0e0e0;
+            --accent-color: #0077b6;
+            --unit-border: #0f3460;
+        }
+
+        body { 
+            font-family: "Microsoft JhengHei", sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+            padding: 20px; 
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 { text-align: center; color: var(--accent-color); }
+
+        .unit-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--unit-border);
+            border-radius: 8px;
+        }
+
+        .unit-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        ul { list-style: none; padding-left: 10px; }
+        
+        li { margin-bottom: 12px; }
+
+        .quiz-link {
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            padding: 10px 15px;
+            background: var(--bg-color);
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .quiz-link:hover {
+            transform: translateX(5px);
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>🌠 五年級自然科學</h1>
-    
-    <h3>單元一：探索星空的奧祕</h3>
-    <ul>
-        <li><a href="science_unit1_quiz1.html">第 1 次練習測驗 (星座基礎)</a></li>
-        <li><a href="science_unit1_quiz2.html">第 2 次練習測驗 (進階星象) - 待建立</a></li>
-    </ul>
 
-    <h3>其他單元</h3>
-    <ul>
-        <li><a href="science-unit2.html">Science Unit 2</a></li>
-        <li><a href="science-unit3.html">Science Unit 3</a></li>
-    </ul>
+<div class="container">
+    <h1>🌠 自然科學測驗目錄</h1>
+
+    <div class="unit-section">
+        <div class="unit-title">📍 第一單元：探索星空的奧祕</div>
+        <ul>
+            <li>
+                <a href="science_unit1_quiz1.html" class="quiz-link">
+                    📝 測驗 1：星座基礎知識 (20題)
+                </a>
+            </li>
+            <li>
+                <a href="science_unit1_quiz2.html" class="quiz-link">
+                    📝 測驗 2：進階星象觀測 (20題)
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="unit-section">
+        <div class="unit-title">📍 第二單元：燃燒與生鏽</div>
+        <ul>
+            <li><a href="science-unit2.html" class="quiz-link">📝 單元練習題</a></li>
+        </ul>
+    </div>
+
+    <div class="unit-section">
+        <div class="unit-title">📍 第三單元：動物世界面面觀</div>
+        <ul>
+            <li><a href="science-unit3.html" class="quiz-link">📝 單元練習題</a></li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-home">⬅ 回到首頁</a>
+</div>
+
+<script>
+    // Theme sync logic
+    window.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    });
+</script>
+
 </body>
 </html>
