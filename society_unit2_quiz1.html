@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五下社會：清帝國時期臺灣的發展與改變 - 全單元測驗</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; background-color: #f0f2f5; color: #333; line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1 { text-align: center; color: #1a5276; border-bottom: 2px solid #1a5276; padding-bottom: 10px; }
+        .quiz-info { text-align: center; margin-bottom: 30px; color: #7f8c8d; font-weight: bold; }
+        .section-title { background: #eaf2f8; padding: 10px; border-left: 5px solid #2980b9; margin: 30px 0 15px 0; font-size: 1.2em; }
+        .question-block { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #f1f1f1; transition: 0.3s; }
+        .question-block:hover { background-color: #fafafa; }
+        .question-title { font-weight: bold; margin-bottom: 12px; display: block; }
+        .options label { display: block; margin: 8px 0; cursor: pointer; padding: 5px; border-radius: 4px; }
+        .options label:hover { background-color: #e8f4fd; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+        .submit-btn { display: block; width: 250px; height: 60px; margin: 40px auto; background-color: #27ae60; color: white; border: none; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(39,174,96,0.3); }
+        .submit-btn:hover { background-color: #219150; transform: translateY(-2px); }
+        #result { display: none; margin-top: 30px; padding: 30px; border-radius: 12px; border: 2px solid #27ae60; background-color: #fafffb; }
+        #scoreText { font-size: 32px; text-align: center; color: #27ae60; margin-bottom: 20px; }
+        .wrong-item { background: #fff5f5; border-left: 6px solid #e74c3c; padding: 20px; margin-top: 15px; border-radius: 8px; }
+        .correct-ans { color: #27ae60; font-weight: bold; margin: 5px 0; }
+        .user-ans-wrong { color: #e74c3c; font-weight: bold; }
+        .explanation { font-size: 0.95em; color: #555; background: #fff; padding: 10px; border-radius: 4px; margin-top: 10px; border: 1px dashed #ccc; }
+        .back-link { display: block; margin-bottom: 20px; text-decoration: none; color: #1a5276; font-weight: bold; }
+
+        /* History Section Styles */
+        .history-section { margin-top: 50px; padding-top: 30px; border-top: 2px dashed #ddd; }
+        .history-item { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee; }
+        .history-item strong { color: #1a5276; }
+        .clear-btn { background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .clear-btn:hover { background: #c0392b; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="society.html" class="back-link">⬅ 返回科目索引</a>
+    <h1>社會科單元評量測驗</h1>
+    <p class="quiz-info">主題：清帝國時期臺灣的發展與改變</p>
+    
+    <form id="quizForm">
+        <div class="section-title">一、是非題 (每題 2 分)</div>
+        <div id="tfContainer"></div>
+        
+        <div class="section-title">二、選擇題 (每題 2 分)</div>
+        <div id="mcContainer"></div>
+        
+        <button type="button" class="submit-btn" onclick="submitQuiz()">交卷評分</button>
+    </form>
+
+    <div id="result">
+        <div id="scoreText"></div>
+        <div id="reviewArea"></div>
+    </div>
+
+    <div class="history-section">
+        <h3>📊 測驗紀錄回顧 (教師專用)</h3>
+        <div id="historyList">尚無測驗紀錄</div>
+        <button class="clear-btn" onclick="clearHistory()">清除所有紀錄</button>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'society_unit2_quiz1_results';
+
+    const tfQuestions = [
+        { q: "清帝國將臺灣納入版圖後，最初曾頒布限制漢人來臺的規定，例如必須經過政府批准。", a: "T", ex: "清初實施渡臺禁令，限制移民需領有執照，且不許攜帶家眷。" },
+        { q: "早期漢人移民來臺主要是因為中國家鄉土地過剩，想來臺灣尋找新的貿易機會。", a: "F", ex: "主要是因為福建、廣東人口過剩、土地不足，生活困苦才冒險來臺。" },
+        { q: "漢人移民在開墾過程中，常因爭奪土地或水源與平埔族群發生衝突，導致部分族群遷居。", a: "T", ex: "漢人的大量移入壓縮了原住民族的生存空間，迫使他們內遷或北移。" },
+        { q: "「械鬥」是指不同移民群體間因語言、風俗 or 利益分配不均而爆發的集體衝突。", a: "T", ex: "常見的有閩粵械鬥、泉漳械鬥，嚴重影響社會治安。" },
+        { q: "瑠公圳主要灌溉的區域是當時的彰化縣二水、田中一帶。", a: "F", ex: "瑠公圳灌溉臺北盆地；彰化地區的重要水圳是八堡圳。" },
+        { q: "清帝國時期，臺灣常見的學習場所包括私塾與書院，教材多為《三字經》或四書五經。", a: "T", ex: "這是當時傳統儒家教育的主要形式。" },
+        { q: "日治時期之前，臺灣就已經建立了非常普及的新式現代化教育制度。", a: "F", ex: "清末僅有少數新式學堂，普及的現代化教育是日治時期才開始推動。" },
+        { q: "1860 年代臺灣開港通商後，經濟重心逐漸由南部轉移到北部。", a: "T", ex: "因茶葉與樟腦產地位於中北部，且大稻埕成為貿易中心。" },
+        { q: "西方傳教士如馬偕，在臺灣除了傳教外，也引進了西方的醫療與教育。", a: "T", ex: "馬偕創辦了醫館（後來的馬偕醫院）與牛津學堂。" },
+        { q: "劉銘傳在擔任臺灣巡撫期間，堅持只推行傳統教育，拒絕引進現代知識。", a: "F", ex: "劉銘傳積極推動現代化，設立西學堂培育外語與科學人才。" },
+        { q: "牡丹社事件的發生，促使清帝國改變治臺態度，開始加強臺灣的防禦與統治。", a: "T", ex: "此事件讓清廷意識到日本的威脅，轉為積極治理臺灣。" },
+        { q: "為了取得穩定灌溉水源，漢人興建了如曹公圳等大規模水圳，擴大了開墾範圍。", a: "T", ex: "水利設施的興修使農業產量大增，也帶動了聚落發展。" },
+        { q: "早期臺灣社會非常鼓勵女性接受教育，因此女學堂的人數一直很多。", a: "F", ex: "早期社會受傳統觀念影響，並不重視女性教育，直到日治後期才逐漸改善。" },
+        { q: "艋舺地區的械鬥事件，間接促成了大稻埕地區的後續開發。", a: "T", ex: "如「頂下郊拚」後，失敗的同安人遷往大稻埕發展。" },
+        { q: "漢人渡過臺灣海峽（黑水溝）非常安全，當時的詩句多在讚美航程的舒適。", a: "F", ex: "「黑水溝」航程極為危險，有「十去，六死，三留，一回頭」之說。" },
+        { q: "施琅攻打臺灣結束了鄭氏政權的統治，清帝國隨後於 1684 年將臺灣納入版圖。", a: "T", ex: "1683年鄭克塽投降，隔年清朝正式公告納入版圖。" },
+        { q: "清帝國畫設界線（如土牛紅線）是為了鼓勵漢人進入山區與原住民族共同生活。", a: "F", ex: "畫設界線是為了防止漢人與原住民族發生衝突，並限制漢人侵占原住民土地。" },
+        { q: "臺灣第一位醫學博士杜聰明，在蛇毒與鴉片研究上有傑出貢獻。", a: "T", ex: "杜聰明是臺灣醫學界的先驅，其貢獻在國際上亦有影響力。" },
+        { q: "日治時期的「公學校」與「小學校」在教學資源與目標上存在不平等的差異。", a: "T", ex: "小學校提供給日籍學生，公學校提供給臺籍學生，資源分配不均。" },
+        { q: "蔡阿信是臺灣史上第一位女建築師，致力於古蹟修復。", a: "F", ex: "蔡阿信是臺灣第一位女性西醫（醫師）。" },
+        { q: "臺中中學校（今臺中一中）是第一所專門招收臺灣人子弟的中學。", a: "T", ex: "由林獻堂等人集資發起，目的是爭取臺人的受教權。" },
+        { q: "早期漢人來臺開墾主要是為了種植咖啡與可可出口到歐洲。", a: "F", ex: "主要是種植稻米與甘蔗。" },
+        { q: "傳教士馬偕創辦了牛津學堂，推廣現代化的西方科學與教育。", a: "T", ex: "這是我國通識教育與西式教育的先驅。" },
+        { q: "清法戰爭與臺灣是否建省完全沒有關係。", a: "F", ex: "清法戰爭讓清廷感於臺灣防務重要，因此於1885年宣佈建省。" },
+        { q: "日治時期設立的「蕃童教育所」是專供原住民族兒童就讀的學校。", a: "T", ex: "這是當時專門對原住民部落推行基本日語與生活教育的場所。" }
+    ];
+
+    const mcQuestions = [
+        { q: "清帝國時期，漢人來臺開墾主要種植哪一種農作物？", options: ["咖啡", "水稻", "甜菜", "葡萄"], a: 1, ex: "稻米是主食，也是當時最重要的農產品。" },
+        { q: "下列哪一項是為了灌溉今臺北市大安、文山一帶而興建的水圳？", options: ["曹公圳", "八堡圳", "瑠公圳", "嘉南大圳"], a: 2, ex: "瑠公圳由郭錫瑠興建，引新店溪水灌溉臺北。" },
+        { q: "1860 年代臺灣發生了什麼大事，導致經濟重心北移？", options: ["開港通商", "鄭氏退位", "實施戒嚴", "全民健保"], a: 0, ex: "開港通商後，北部的茶葉與樟腦成為出口大宗。" },
+        { q: "哪一位清朝官員在臺期間創辦新式學堂，聘請外國人教授英語、數學？", options: ["施琅", "劉銘傳", "沈葆楨", "林獻堂"], a: 1, ex: "劉銘傳推動臺灣現代化建設，被譽為臺灣近代化之父。" },
+        { q: "關於「械鬥」的敘述，下列何者正確？", options: ["是與外國軍隊的戰爭", "是政府舉辦的武術比賽", "是文人間的詩詞競賽", "是移民群體間的暴力衝突"], a: 3, ex: "械鬥是移民因籍貫、利益等發生的武裝鬥爭。" },
+        { q: "臺灣第一位女性醫師是誰？", options: ["蔡阿信", "謝雪紅", "秋瑾", "林徽因"], a: 0, ex: "蔡阿信打破性別限制，推動女性醫療教育。" },
+        { q: "促使清帝國開始積極治理臺灣、加強防禦的關鍵事件是？", options: ["漢人移民", "開港通商", "牡丹社事件", "水圳完工"], a: 2, ex: "日本藉牡丹社事件出兵臺灣，驚醒清廷加強治理。" },
+        { q: "日治時期，臺灣兒童主要就讀哪一種初等教育學校？", options: ["小學校", "公學校", "私塾", "大學"], a: 1, ex: "公學校是當時政府專為臺灣子弟設立的學校。" },
+        { q: "下列哪一位是早期接受新式教育的鄒族精英，致力於文化保存？", options: ["杜聰明", "陳澄波", "馬偕", "高一生"], a: 3, ex: "高一生對鄒族語言與音樂保存有極大貢換。" },
+        { q: "清帝國時期漢人渡海來臺主要面臨的危險「黑水溝」是指？", options: ["長江", "淡水河", "臺灣海峽", "濁水溪"], a: 2, ex: "臺灣海峽水流湍急、顏色深沉，被稱為黑水溝。" },
+        { q: "下列哪一組是清帝國時期私塾常用的教材？", options: ["物理、化學", "《三字經》、《千字文》", "日語、算術", "體操、音樂"], a: 1, ex: "傳統私塾以識字與儒家經典教育為主。" },
+        { q: "哪一位傳教士在淡水創辦「理學堂大書院」（牛津學堂）？", options: ["馬偕", "施琅", "劉銘傳", "杜聰明"], a: 0, ex: "加拿大傳教士馬偕博士致力於淡水地區的發展。" },
+        { q: "日治時期設立醫學校、農林學校的主要目的是？", options: ["鼓勵文學創作", "推廣宗教信仰", "培養各類專業技術人才", "增加休閒機會"], a: 2, ex: "殖民政府為了經濟開發與公共衛生，培養相關技術人力。" },
+        { q: "八堡圳主要灌溉哪一個縣市的土地？", options: ["臺北市", "彰化縣", "高雄市", "新北市"], a: 1, ex: "八堡圳是彰化平原最重要的灌溉系統。" },
+        { q: "關於日治時期教育的描述，何者符合事實？", options: ["男女就學完全平等", "完全禁止臺灣人讀書", "只有日本人能讀公學校", "女性就學比率逐漸提高"], a: 3, ex: "隨著近代觀念引入，女子就學率在日治後期有顯著提升。" },
+        { q: "清帝國何時正式將臺灣納入版圖？", options: ["西元 1684 年", "西元 1945 年", "西元 1895 年", "西元 1624 年"], a: 0, ex: "1683年鄭氏降，1684年設臺灣府隸屬福建省。" },
+        { q: "早期移民社會動盪不安的原因之一是？", options: ["警察太多", "交通太發達", "官員腐敗與管理失當", "電視節目太少"], a: 2, ex: "清代官府管理不力，常導致民變與集體衝突。" },
+        { q: "「土牛溝」或「界碑」的主要功能是？", options: ["劃分稻田產量", "畫設漢人與原住民的界線", "標示觀光景點", "測量降雨量"], a: 1, ex: "這是在地面上人工挖掘的界溝或堆土山，防止漢人私自入山。" },
+        { q: "哪一場戰爭促使臺灣在 1885 年正式建省？", options: ["鴉片戰爭", "甲午戰爭", "第二次世界大戰", "清法戰爭"], a: 3, ex: "清法戰爭後，清廷體認臺灣防禦不可輕忽，宣佈建省。" },
+        { q: "杜聰明博士對臺灣最大的醫療貢獻之一是研究？", options: ["蛇毒與鴉片治療", "心臟移植", "外科整型", "中醫針灸"], a: 0, ex: "他的科學研究為臺灣本土醫療帶來突破性貢獻。" },
+        { q: "日治時期「小學校」主要的就讀對象是？", options: ["原住民族兒童", "日本人兒童", "貧苦農家", "所有臺灣兒童"], a: 1, ex: "小學校資源優於公學校，主要供在臺日人就讀。" },
+        { q: "哪一個族群因漢人過度開發土地，被迫遷往埔里盆地？", options: ["漢人", "日本人", "平埔族群", "西方傳教士"], a: 2, ex: "清代平埔族群受土地流失影響，發生過多次大規模遷徙。" },
+        { q: "曹公圳是由哪一位地方官員號召興建的？", options: ["劉銘傳", "施琅", "馬偕", "曹謹"], a: 3, ex: "鳳山知縣曹謹任內興建，解決了高雄地區的旱象。" },
+        { q: "林獻堂等人在日治時期努力爭取設立什麼學校，以保障臺灣人的受教權？", options: ["臺中中學校", "牛津學堂", "蕃童教育所", "國語傳習所"], a: 0, ex: "今臺中一中的前身，是第一所為臺籍子弟爭取的高級中學。" },
+        { q: "開港通商後，哪一種文化開始影響臺灣人的日常生活？", options: ["荷蘭文化", "西方醫療與文化", "唐朝文化", "印加文化"], a: 1, ex: "洋行林立與傳教士到來，引進了新觀念與技術。" }
+    ];
+
+    function init() {
+        const tfArea = document.getElementById('tfContainer');
+        tfQuestions.forEach((q, i) => {
+            tfArea.innerHTML += `
+                <div class="question-block">
+                    <span class="question-title">${i + 1}. ${q.q}</span>
+                    <div class="options">
+                        <label><input type="radio" name="tf${i}" value="T"> 正確 (○)</label>
+                        <label><input type="radio" name="tf${i}" value="F"> 錯誤 (╳)</label>
+                    </div>
+                </div>`;
+        });
+
+        const mcArea = document.getElementById('mcContainer');
+        mcQuestions.forEach((q, i) => {
+            let opts = q.options.map((opt, idx) => `
+                <label><input type="radio" name="mc${i}" value="${idx}"> ${idx+1}. ${opt}</label>
+            `).join('');
+            mcArea.innerHTML += `
+                <div class="question-block">
+                    <span class="question-title">${i + 1}. ${q.q}</span>
+                    <div class="options">${opts}</div>
+                </div>`;
+        });
+    }
+
+    function submitQuiz() {
+        let totalScore = 0;
+        let reviewHtml = '<h2>錯題回顧與解析</h2>';
+        let wrongCount = 0;
+        let mistakes = [];
+
+        // Check TF
+        tfQuestions.forEach((item, i) => {
+            const selected = document.querySelector(`input[name="tf${i}"]:checked`);
+            const userAns = selected ? selected.value : null;
+            if (userAns === item.a) {
+                totalScore += 2;
+            } else {
+                wrongCount++;
+                const userDisplay = userAns === "T" ? "○" : (userAns === "F" ? "╳" : "未答");
+                const correctDisplay = item.a === "T" ? "○" : "╳";
+                reviewHtml += createReviewItem(i+1, "是非題", item.q, userDisplay, correctDisplay, item.ex);
+                mistakes.push({ question: item.q, user: userDisplay, correct: correctDisplay });
+            }
+        });
+
+        // Check MC
+        mcQuestions.forEach((item, i) => {
+            const selected = document.querySelector(`input[name="mc${i}"]:checked`);
+            const userAns = selected ? parseInt(selected.value) : null;
+            if (userAns === item.a) {
+                totalScore += 2;
+            } else {
+                wrongCount++;
+                const userDisplay = userAns === null ? "未答" : item.options[userAns];
+                const correctDisplay = item.options[item.a];
+                reviewHtml += createReviewItem(i+1, "選擇題", item.q, userDisplay, correctDisplay, item.ex);
+                mistakes.push({ question: item.q, user: userDisplay, correct: correctDisplay });
+            }
+        });
+
+        // Save to History
+        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        history.push({
+            date: new Date().toLocaleString(),
+            score: totalScore,
+            total: 100,
+            mistakes: mistakes
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+
+        document.getElementById('scoreText').innerHTML = `您的總分：${totalScore} / 100`;
+        document.getElementById('reviewArea').innerHTML = wrongCount > 0 ? reviewHtml : '<p style="color:green; text-align:center; font-size:1.5em;">恭喜你！全部答對了！</p>';
+        document.getElementById('result').style.display = 'block';
+        displayHistory();
+        window.scrollTo({ top: document.getElementById('result').offsetTop, behavior: 'smooth' });
+    }
+
+    function displayHistory() {
+        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        const historyList = document.getElementById('historyList');
+        if (history.length === 0) {
+            historyList.innerHTML = "尚無測驗紀錄";
+            return;
+        }
+        historyList.innerHTML = history.slice().reverse().map((item, idx) => `
+            <div class="history-item">
+                <strong>第 ${history.length - idx} 次測驗 - ${item.date}</strong><br>
+                得分：<span style="color: #27ae60; font-weight: bold;">${item.score} / ${item.total}</span>
+                <details style="margin-top: 10px;">
+                    <summary style="cursor: pointer; color: #1a5276;">查看詳情</summary>
+                    <div style="margin-top: 10px; font-size: 0.9em; border-top: 1px solid #eee; padding-top: 10px;">
+                        ${item.mistakes.length > 0 ? item.mistakes.map(m => `
+                            <p style="margin-bottom: 8px;">
+                                <strong>問：</strong>${m.question}<br>
+                                <span style="color: #e74c3c;">答：${m.user}</span> | <span style="color: #27ae60;">正：${m.correct}</span>
+                            </p>
+                        `).join('') : "全部正確！"}
+                    </div>
+                </details>
+            </div>
+        `).join('');
+    }
+
+    function clearHistory() {
+        if (confirm("確定要清除所有測驗紀錄嗎？")) {
+            localStorage.removeItem(STORAGE_KEY);
+            displayHistory();
+        }
+    }
+
+    function createReviewItem(no, type, q, user, correct, ex) {
+        return `
+            <div class="wrong-item">
+                <strong>[${type} 第 ${no} 題]</strong> ${q}
+                <div class="user-ans-wrong">您的回答：${user}</div>
+                <div class="correct-ans">正確答案：${correct}</div>
+                <div class="explanation">💡 學習點：${ex}</div>
+            </div>`;
+    }
+
+    window.onload = function() {
+        init();
+        displayHistory();
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社會科測驗索引</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <h1>🏛️ 社會科測驗目錄</h1>
+
+    <div class="unit-section">
+        <div class="unit-title">📍 第一單元：社會探究與實踐</div>
+        <ul>
+            <li>
+                <a href="#" class="quiz-link">
+                    📝 尚未開放
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="unit-section">
+        <div class="unit-title">📍 第二單元：清帝國時期臺灣的發展與改變</div>
+        <ul>
+            <li>
+                <a href="society_unit2_quiz1.html" class="quiz-link">
+                    📝 社會科單元評量測驗 (全單元測驗)
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-home">⬅ 回到首頁</a>
+</div>
+
+<script>
+    // Theme sync logic
+    window.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.getElementById('themeBtn');
+        if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+    });
+</script>
+
+</body>
+</html>

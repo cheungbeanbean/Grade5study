@@ -156,6 +156,7 @@ h1 {
 .science-card { background: linear-gradient(135deg, #f43f5e, #be123c); }
 .english-card { background: linear-gradient(135deg, #f59e0b, #b45309); }
 .math-card { background: linear-gradient(135deg, #10b981, #047857); }
+.society-card { background: linear-gradient(135deg, #6366f1, #4338ca); }
 
 .subject-card h2 {
     color: white;
